@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Formulario reactivo
+    </ion-title>
+    <ion-button slot="end" fill="clear" type="button"
+      [attr.aria-label]="isDarkMode ? 'Activar modo claro' : 'Activar modo oscuro'"
+      (click)="toggleDarkMode()">
+      {{ isDarkMode ? 'Modo claro' : 'Modo oscuro' }}
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Formulary</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <ion-list lines="full">
+      <!-- Campo Nombre -->
+      <ion-item>
+        <ion-input label="Nombre completo" labelPlacement="floating" type="text" formControlName="nombre"
+          [errorText]="'El nombre es obligatorio (mín. 3 caracteres).'">
+        </ion-input>
+      </ion-item>
+      <!-- Campo Email con teclado específico para móviles -->
+      <ion-item>
+        <ion-input label="Correo Electrónico" labelPlacement="floating" type="email" inputmode="email"
+          formControlName="email" [errorText]="'Introduzca un email válido.'">
+        </ion-input>
+      </ion-item>
+      <!-- Campo Contraseña -->
+      <ion-item>
+        <ion-input label="Contraseña" labelPlacement="floating" type="password" formControlName="password"
+          [errorText]="'Mínimo 8 caracteres, letras y números.'">
+        </ion-input>
+      </ion-item>
+      <!-- Campo Calendario -->
+      <ion-item>
+        <ion-datetime
+          presentation="date"
+          formControlName="fecha"
+          [min]="minDate">
+        </ion-datetime>
+      </ion-item>
+    </ion-list>
+    <div class="ion-padding-top">
+      <!-- Botón dinámico que responde al Signal -->
+      <ion-button expand="block" type="submit" [disabled]="registroForm.invalid || isSubmitting()">
+        @if (!isSubmitting()) { <span>Registrarse</span> }
+        @if (isSubmitting()) { <ion-spinner name="crescent"></ion-spinner> }
+      </ion-button>
+    </div>
+    
+  </form>
+
+</ion-content>
